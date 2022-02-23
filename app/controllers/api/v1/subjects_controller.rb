@@ -9,7 +9,7 @@ module Api
         @tests = Test.where(subject: params.require(:subject))
 
         results = @tests.map { |t| t.results.pluck(:score) }
-                       .flatten
+                        .flatten
 
         # Compute highest score...
         @highest = results.max
