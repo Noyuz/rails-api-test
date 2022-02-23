@@ -35,6 +35,33 @@ module Api
         @test.destroy
       end
 
+      def stats
+        results = @test.results.order(score: :asc).pluck(:score)
+
+        # Compute highest score...
+        @highest = results.max
+
+        # Compute lowest score...
+        @lowest = results.min
+
+        # Compute median score...
+        center = results.size / 2
+        @median = results.size.even? ? (results[center] + results[center + 1]) / 2 : results[center]
+
+        # Compute average score...
+        @average = results.sum / results.size
+
+        render json: {
+          student_scores: {
+            max: @highest,
+            min: @lowest,
+            average: @average,
+            median: @median
+          },
+          maximum_possible_score: @test.maximum_score
+        }
+      end
+
       private
 
       def load_test
