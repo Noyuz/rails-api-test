@@ -17,12 +17,18 @@ module Api
         # Compute lowest score...
         @lowest = results.min
 
-        # Compute median score...
-        center = results.size / 2
-        @median = results.size.even? ? (results[center] + results[center + 1]) / 2 : results[center]
-
         # Compute average score...
-        @average = results.sum / results.size
+        @average = (results.sum / results.size unless results.size.zero?)
+
+        # Compute median score...
+        begin
+          center = results.size / 2
+          @median = results.size.even? ? (results[center] + results[center + 1]) / 2 : results[center]
+        rescue TypeError, NoMethodError => e
+          # If the series has two or less values, the above method of computation will fail.
+          # However, in both those cases, median == average so we have a backup.
+          @median = @average
+        end
 
         render json: {
           scores: {
