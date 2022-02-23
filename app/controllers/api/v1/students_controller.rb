@@ -1,7 +1,7 @@
 module Api
   module V1
     class StudentsController < ApplicationController
-      before_action :load_student, only: %i[show update destroy]
+      before_action :load_student, except: %i[index create]
 
       def index
         @students = Student.all

@@ -1,7 +1,7 @@
 module Api
   module V1
     class TestsController < ApplicationController
-      before_action :load_test, except: %i[show update destroy]
+      before_action :load_test, except: %i[index create]
 
       def index
         @tests = Test.all
