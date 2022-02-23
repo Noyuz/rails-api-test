@@ -52,7 +52,7 @@ module Api
         @average = results.sum / results.size
 
         render json: {
-          student_scores: {
+          scores: {
             max: @highest,
             min: @lowest,
             average: @average,
