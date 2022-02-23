@@ -35,6 +35,14 @@ module Api
         @student.destroy
       end
 
+      def stats
+        # 1. Implement this action.
+        #    It should return highest score, lowest score, median and average scores.
+        #
+        # 3. Implement a filter based on a query param "subject" permitting filtering of results
+        #    For example, /api/v1/students/:id/stats?subject=math will display stats for the "math" subject.
+      end
+
       private
 
       def load_student
@@ -45,4 +53,5 @@ module Api
         params.require(:student).permit(:first_name, :last_name, :email, :phone)
       end
     end
-  end end
+  end
+end
