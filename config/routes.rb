@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  scope :api do
-    scope :v1 do
+  namespace :api do
+    namespace :v1 do
       resources :students
       resources :tests do
         resources :results, controller: 'test_results'
