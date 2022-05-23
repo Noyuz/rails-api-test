@@ -38,9 +38,23 @@ module Api
       def stats
         # 1. Implement this action.
         #    It should return highest score, lowest score, median and average scores.
+        case params[:subject]
+        when 'math'
+          render json: @student.to_stats(@student.test_results.reject { |test| test.test_id > 3 }.map(&:score))
+          # renvoyer les stats des sujets math
+        when 'engineering'
+          render json: @student.to_stats(@student.test_results.select { |test| [4, 5].include?(test.test_id) }.map(&:score))
+          # renvoyer les stats des sujets engineering
+        when 'physics'
+          render json: @student.to_stats(@student.test_results.select { |test| [6, 7].include?(test.test_id) }.map(&:score))
+          # renvoyer les stats des sujets physics
+        else
+          render json: @student.stats
+        end
+
+        # Question 4 :
+        # mettre les scores avec un maximum_score commun
         #
-        # 3. Implement a filter based on a query param "subject" permitting filtering of results
-        #    For example, /api/v1/students/:id/stats?subject=math will display stats for the "math" subject.
       end
 
       private
